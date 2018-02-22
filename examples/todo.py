@@ -1,9 +1,4 @@
-from gzuro import (
-    Grid,
-    Text,
-    TextInput,
-    Button,
-)
+from gzuro import Button, Grid, Text, TextInput
 
 
 def create_item(text):
@@ -14,7 +9,6 @@ def create_item(text):
     grid.append(btn)
 
     return grid
-
 
 
 if __name__ == '__main__':

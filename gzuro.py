@@ -1,7 +1,7 @@
 from kivy.adapters.listadapter import ListAdapter
-from kivy.uix.button import Button as _Button
 from kivy.app import App
 from kivy.properties import StringProperty
+from kivy.uix.button import Button as _Button
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.image import Image as _Image
 from kivy.uix.label import Label
