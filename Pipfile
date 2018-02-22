@@ -1,0 +1,15 @@
+[[source]]
+
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+
+[packages]
+
+cython = "==0.26.1"
+"d4a76af" = {file = "https://github.com/kivy/kivy/archive/master.zip"}
+
+
+[dev-packages]
+

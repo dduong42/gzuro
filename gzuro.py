@@ -1,11 +1,13 @@
-from kivy.app import App
-from kivy.uix.gridlayout import GridLayout
-from kivy.uix.label import Label
-from kivy.properties import StringProperty
-from kivy.uix.listview import ListView, ListItemButton
-from kivy.uix.textinput import TextInput as TInput
 from kivy.adapters.listadapter import ListAdapter
+from kivy.uix.button import Button as _Button
+from kivy.app import App
+from kivy.properties import StringProperty
+from kivy.uix.gridlayout import GridLayout
 from kivy.uix.image import Image as _Image
+from kivy.uix.label import Label
+from kivy.uix.listview import ListItemButton, ListView
+from kivy.uix.textinput import TextInput as TInput
+
 
 def _args_converter(index, item):
     return {
@@ -13,87 +15,85 @@ def _args_converter(index, item):
     }
 
 
-class Image:
-    def __init__(self, path):
-        self._image = _Image(source=path)
-
+class Element:
     def attach_to(self, grid):
-        grid.add_widget(self._image)
+        self._grid = grid
+        grid.add_widget(self._element)
 
-
-class Grid:
-    def __init__(self, **kwargs):
-        self._grid = GridLayout(**kwargs)
-
-    def append(self, element):
-        element.attach_to(self._grid)
-
-    def attach_to(self, grid):
-        grid.add_widget(self._grid)
+    def delete(self):
+        self._grid.remove_widget(self._element)
 
     def run(self):
         class _MyApp(App):
             def build(_self):
-                return self._grid
+                return self._element
 
         _MyApp().run()
 
 
-class Text:
+class Button(Element):
+    def __init__(self, text, on_click):
+        self._element = _Button(text=text)
+        self._element.bind(on_press=lambda instance: on_click())
+
+
+class Image(Element):
+    def __init__(self, path):
+        self._element = _Image(source=path)
+
+
+class Grid(Element):
+    def __init__(self, **kwargs):
+        self._element = GridLayout(**kwargs)
+
+    def append(self, element):
+        element.attach_to(self._element)
+
+
+class Text(Element):
     def __init__(self, content=None):
-        self._label = Label(text=content)
+        self._element = Label(text=content)
 
     @property
     def content(self):
-        return self._label.text
+        return self._element.text
 
     @content.setter
     def content(self, value):
-        self._label.text = value
-
-    def attach_to(self, grid):
-        grid.add_widget(self._label)
-
-    def run(self):
-        class _MyApp(App):
-            def build(self):
-                return self._label
-
-        _MyApp().run()
+        self._element.text = value
 
 
-class TextInput:
+class TextInput(Element):
     def __init__(self):
-        self._callbacks = []
+        self._text_callbacks = []
+        self._submit_callbacks = []
 
         class _TextInput(TInput):
             def on_text(_self, item, value):
-                for callback in self._callbacks:
+                for callback in self._text_callbacks:
                     callback()
 
-        self._txtinput = _TextInput()
+            def on_text_validate(_self):
+                for callback in self._submit_callbacks:
+                    callback()
+
+        self._element = _TextInput(multiline=False)
 
     @property
     def content(self):
-        return self._txtinput.text
+        return self._element.text
 
     @content.setter
     def content(self, value):
-        self._txtinput.text = value
+        self._element.text = value
 
     def on_change(self, f):
-        self._callbacks.append(f)
+        self._text_callbacks.append(f)
         return f
 
-    def attach_to(self, grid):
-        grid.add_widget(self._txtinput)
-
-    def run(self):
-        class _MyApp(App):
-            def build(self):
-                return self._txtinput
-
-        _MyApp().run()
+    def on_submit(self, f):
+        self._submit_callbacks.append(f)
+        return f
 
 
 class SelectList:
@@ -121,7 +121,7 @@ class SelectList:
             selection_mode='single',
             allow_empty_selection=False,
         )
-        self._listview = ListView(adapter=self._adapter)
+        self._element = ListView(adapter=self._adapter)
         self._adapter.select(default)
 
     @property
@@ -143,13 +143,3 @@ class SelectList:
     def on_selection(self, f):
         self._selection_callbacks.append(f)
         return f
-
-    def attach_to(self, grid):
-        grid.add_widget(self._listview)
-
-    def run(self):
-        class _MyApp(App):
-            def build(self):
-                return self._listview
-
-        _MyApp().run()
