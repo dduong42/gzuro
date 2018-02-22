@@ -4,7 +4,8 @@ from gzuro import Button, Grid, Text, TextInput
 def create_item(text):
     grid = Grid(cols=3)
     text = Text(text)
-    btn = Button(text='x', on_click=grid.delete)
+    btn = Button(text='x')
+    btn.on_click(grid.delete)
     grid.append(text)
     grid.append(btn)
 

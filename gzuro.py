@@ -32,9 +32,18 @@ class Element:
 
 
 class Button(Element):
-    def __init__(self, text, on_click):
+    def __init__(self, text):
+        self._callbacks = []
         self._element = _Button(text=text)
-        self._element.bind(on_press=lambda instance: on_click())
+        self._element.bind(on_press=lambda instance: self._run_callbacks())
+
+    def _run_callbacks(self):
+        for callback in self._callbacks:
+            callback()
+
+    def on_click(self, f):
+        self._callbacks.append(f)
+        return f
 
 
 class Image(Element):
