@@ -172,3 +172,22 @@ root.append(button)
 root.append(text)
 root.run()
 ```
+
+### Removing an element
+
+You can remove an element by using the `delete` method (`delete_example.py`).
+
+```python
+from gzuro import Grid, Text
+
+root = Grid(cols=1)
+hello = Text('Hello')
+world = Text('World!')
+root.append(hello)
+root.append(world)
+world.delete()
+root.run()
+```
+
+Note that we're deleting the element after it's attached. It doesn't make sense to delete an element if it's not attached (it's not displayed).
+
