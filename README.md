@@ -191,3 +191,61 @@ root.run()
 
 Note that we're deleting the element after it's attached. It doesn't make sense to delete an element if it's not attached (it's not displayed).
 
+### TextInput
+
+Let's start with a grid with a `Text` and a `TextInput`.
+
+```python
+from gzuro import Grid, Text, TextInput
+
+root = Grid(cols=2)
+text_input = TextInput()
+text = Text('Some text')
+root.append(text_input)
+root.append(text)
+root.run()
+```
+
+Let's change the text when we submit something from the `TextInput`. Same thing as before, we will write a callback (`on_submit_example.py`).
+
+```python
+from gzuro import Grid, Text, TextInput
+
+root = Grid(cols=2)
+text_input = TextInput()
+text = Text('Some text')
+
+
+@text_input.on_submit
+def change_text():
+    text.content = text_input.content
+    # Flush the TextInput
+    text_input.content = ''
+
+
+root.append(text_input)
+root.append(text)
+root.run()
+```
+
+Now when we press `ENTER`, the text should change.
+
+We can also do an action each time the content from the `TextInput` is changed (`on_change_example.py`):
+
+```python
+from gzuro import Grid, Text, TextInput
+
+root = Grid(cols=2)
+text_input = TextInput()
+text = Text('Some text')
+
+
+@text_input.on_change
+def change_text():
+    text.content = text_input.content.upper()
+
+
+root.append(text_input)
+root.append(text)
+root.run()
+```
