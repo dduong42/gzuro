@@ -2,7 +2,7 @@ from gzuro import Button, Grid, Text, TextInput
 
 
 def create_item(text):
-    grid = Grid(cols=3)
+    grid = Grid(cols=2)
     text = Text(text)
     btn = Button(text='x')
     btn.on_click(grid.delete)
