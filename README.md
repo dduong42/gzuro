@@ -129,3 +129,46 @@ hello.content = 'hello world :)'
 root.append(hello)
 root.run()
 ```
+
+### Our first `Button`
+
+Let's do a 2 cols grid with a button and a text.
+
+```python
+from gzuro import Grid, Text, Button
+
+root = Grid(cols=2)
+button = Button(text='Click me')
+text = Text('Not clicked')
+root.append(button)
+root.append(text)
+root.run()
+```
+
+Now let's change the text when we click on the `Button`. To do that, we just need to write a callback.
+
+```python
+@button.on_clicked
+def change_text():
+    text.content = 'clicked'
+```
+
+Here is the whole code (`simple_btn.py`)
+
+```python
+from gzuro import Grid, Text, Button
+
+root = Grid(cols=2)
+button = Button(text='Click me')
+text = Text('Not clicked')
+
+
+@button.on_click
+def change_text():
+    text.content = 'clicked'
+
+
+root.append(button)
+root.append(text)
+root.run()
+```
