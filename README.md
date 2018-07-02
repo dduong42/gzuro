@@ -48,7 +48,7 @@ root.append(hello)
 root.run()
 ```
 
-Now if you run `hello.py`, you should see `Hello World`.
+Now if you run `hello.py`, you should see `Hello World!`.
 
 ```
 python3 hello.py
@@ -79,6 +79,32 @@ hello = Text('Hello')
 world = Text('World!')
 root.append(hello)
 root.append(world)
+root.run()
+```
+
+### Questions about the grid
+
+What happens when we do this?
+
+```python
+from gzuro import Grid, Text
+
+root = Grid(rows=1)
+root.append(Text('First'))
+root.append(Text('Second'))
+root.append(Text('Last'))
+root.run()
+```
+
+What about this?
+
+```python
+from gzuro import Grid, Text
+
+root = Grid(cols=1)
+root.append(Text('First'))
+root.append(Text('Second'))
+root.append(Text('Last'))
 root.run()
 ```
 
