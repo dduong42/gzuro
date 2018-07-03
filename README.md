@@ -303,3 +303,18 @@ def add_element():
 
 root.run()
 ```
+
+### Images
+
+Let's say you want to display an image. No problem, you can do it like this (`image.py`):
+
+```python
+import pathlib
+from gzuro import Grid, Image
+
+current_dir = pathlib.Path(__file__).parent
+image_path = current_dir / 'shiba.jpg'
+root = Grid(cols=1)
+root.append(Image(str(image_path)))
+root.run()
+```
