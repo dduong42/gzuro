@@ -60,7 +60,7 @@ class Grid(Element):
 
 
 class Text(Element):
-    def __init__(self, content=None):
+    def __init__(self, content=''):
         self._element = Label(text=content)
 
     @property
