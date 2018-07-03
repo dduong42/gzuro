@@ -332,7 +332,7 @@ root.append(select_list)
 root.run()
 ```
 
-Let's display the selected choice in a `Text`.
+Let's display the selected choice in a `Text` (`select.py`).
 
 ```python
 from gzuro import Grid, SelectList, Text
