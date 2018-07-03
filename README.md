@@ -318,3 +318,33 @@ root = Grid(cols=1)
 root.append(Image(str(image_path)))
 root.run()
 ```
+
+### SelectList
+
+Let's say you have a few elements from a list and you want to select one from them. You can do that with a `SelectList`
+
+```python
+from gzuro import Grid, SelectList
+
+root = Grid(cols=1)
+select_list = SelectList(choices=['blue', 'black', 'grey'], default='blue')
+root.append(select_list)
+root.run()
+```
+
+Let's display the selected choice in a `Text`.
+
+```python
+from gzuro import Grid, SelectList, Text
+
+root = Grid(cols=2)
+select_list = SelectList(choices=['blue', 'black', 'grey'], default='blue')
+text = Text('Selected: blue')
+root.append(select_list)
+root.append(text)
+
+@select_list.on_selection
+def change_text():
+    text.content = f'Selected: {select_list.selected}'
+root.run()
+```
