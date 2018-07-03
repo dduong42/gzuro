@@ -105,7 +105,7 @@ class TextInput(Element):
         return f
 
 
-class SelectList:
+class SelectList(Element):
     def __init__(self, *, choices, default):
         self._selection_callbacks = []
 
