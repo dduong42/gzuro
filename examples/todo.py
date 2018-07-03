@@ -1,26 +1,18 @@
-from gzuro import Button, Grid, Text, TextInput
+from gzuro import Grid, TextInput, Text, Button
+
+root = Grid(cols=1)
+text_input = TextInput()
+root.append(text_input)
 
 
-def create_item(text):
+@text_input.on_submit
+def add_element():
     grid = Grid(cols=2)
-    text = Text(text)
-    btn = Button(text='x')
-    btn.on_click(grid.delete)
-    grid.append(text)
-    grid.append(btn)
+    grid.append(Text(text_input.content))
+    button = Button(text='x')
+    grid.append(button)
+    button.on_click(grid.delete)
+    text_input.content = ''
+    root.append(grid)
 
-    return grid
-
-
-if __name__ == '__main__':
-    root = Grid(cols=1)
-    txt_input = TextInput()
-
-    @txt_input.on_submit
-    def submit_callback():
-        item = create_item(txt_input.content)
-        txt_input.content = ''
-        root.append(item)
-
-    root.append(txt_input)
-    root.run()
+root.run()

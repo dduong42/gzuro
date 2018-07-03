@@ -249,3 +249,57 @@ root.append(text_input)
 root.append(text)
 root.run()
 ```
+
+### A little TODO app
+
+What do we need ? Well, first we need a `TextInput` to add our elements.
+
+```python
+from gzuro import Grid, TextInput
+
+root = Grid(cols=1)
+text_input = TextInput()
+root.append(text_input)
+root.run()
+```
+
+Now what happens when we submit? We want to add the element in our list.
+
+```python
+from gzuro import Grid, TextInput, Text
+
+root = Grid(cols=1)
+text_input = TextInput()
+root.append(text_input)
+
+
+@text_input.on_submit
+def add_element():
+    root.append(Text(text_input.content))
+    text_input.content = ''
+
+root.run()
+```
+
+Now let's add also a button to remove the element from the list (`todo.py`).
+
+```python
+from gzuro import Grid, TextInput, Text, Button
+
+root = Grid(cols=1)
+text_input = TextInput()
+root.append(text_input)
+
+
+@text_input.on_submit
+def add_element():
+    grid = Grid(cols=2)
+    grid.append(Text(text_input.content))
+    button = Button(text='x')
+    grid.append(button)
+    button.on_click(grid.delete)
+    text_input.content = ''
+    root.append(grid)
+
+root.run()
+```
